@@ -38,6 +38,7 @@ export default function RegistrationScreen({ navigation }){
         Keyboard.dismiss();
         // dispatch(authSignUpUser(state))
         setState(initialState);
+        navigation.navigate('Home')
         console.log(state);
     }
 

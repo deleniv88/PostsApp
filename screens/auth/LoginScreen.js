@@ -39,9 +39,10 @@ export default function LoginScreen({ navigation }) {
         }
         Dimensions.addEventListener("change", onChange);
         return () => {
-            Dimensions.removeEventListener("change", onChange)
-        }
-    },[])
+          Dimensions.removeEventListener("change", onChange);
+        };
+      }, []);
+    
 
     return (
         <ImageBackground source={image} style={styles.image}>
@@ -100,10 +101,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: 'white',
-        borderRadius: 10,
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10
     },
     regitrationTitle: {
-        // fontWeight: 0.5,
         fontSize: 30
     },
     input: {
@@ -115,14 +116,12 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 16,
         paddingLeft: 10
-        // fontFamily: "Roboto-Regular"
     },
     image: {
         flex: 1,
         resizeMode: "cover",
         justifyContent: "center",
         alignItems: "center",
-        // position: "relative"
     },
     form: {
         marginHorizontal: 40,
