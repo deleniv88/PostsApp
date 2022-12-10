@@ -38,7 +38,7 @@ export default function ProfileScreen({ route, navigation }) {
                                     <Image source={{ uri: item.photo }}
                                         style={styles.postImage}></Image>
                                     <View>
-                                        <Text>Name of post</Text>
+                                        <Text>{item.photoName}</Text>
                                     </View>
                                     <View style={styles.commentsAndLocation}>
                                         <TouchableOpacity style={styles.commentField}>
@@ -51,7 +51,7 @@ export default function ProfileScreen({ route, navigation }) {
                                             <EvilIcons name="location" size={24}></EvilIcons>
                                             <Text
                                                 onPress={() => navigation.navigate("Map")}
-                                                style={styles.location}>Location</Text>
+                                                style={styles.location}>{item.locationName}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -59,6 +59,7 @@ export default function ProfileScreen({ route, navigation }) {
                     </View>
                 </View>
             </View>
+
         </ImageBackground>
     )
 }

@@ -17,7 +17,6 @@ export default function App() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const routing = useRoute(true);
 
-
   if (!isDataLoaded) {
     return (
       <AppLoading

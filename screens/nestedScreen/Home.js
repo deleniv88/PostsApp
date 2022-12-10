@@ -31,7 +31,7 @@ export default function Home({ route, navigation }) {
                             <Image source={{ uri: item.photo }}
                                 style={styles.postImage}></Image>
                             <View>
-                                <Text>Name of post</Text>
+                                <Text>{item.photoName}</Text>
                             </View>
                             <View style={styles.commentsAndLocation}>
                                 <TouchableOpacity style={styles.commentField}>
@@ -44,7 +44,9 @@ export default function Home({ route, navigation }) {
                                     <EvilIcons name="location" size={24}></EvilIcons>
                                     <Text
                                         onPress={() => navigation.navigate("Map")}
-                                        style={styles.location}>Location</Text>
+                                        style={styles.location}>
+                                            {item.locationName}
+                                        </Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

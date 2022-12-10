@@ -16,6 +16,9 @@ export default function CreatePostsScreen({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
 
+    const [photoName, setPhotoName] = useState('');
+    const [locationName, setLocationName] = useState(null)
+
     const [postName, setPostName] = useState('');
 
     // const [location, setLocation] = useState(null)
@@ -33,8 +36,11 @@ export default function CreatePostsScreen({ navigation }) {
 
     const sendPhoto = () => {
         console.log(navigation);
-        navigation.navigate("Profile", { photo })
-        navigation.navigate("Home", { photo })   
+        navigation.navigate("Profile", { photo, photoName, locationName })
+        navigation.navigate("Home", { photo, photoName, locationName })   
+        setPhotoName('');
+        setLocationName('')
+        console.log(photoName);
     }
 
     useEffect(() => {
@@ -87,13 +93,18 @@ export default function CreatePostsScreen({ navigation }) {
             <View style={styles.form}>
                 <TextInput
                     placeholder="Name..."
-                    style={styles.inputName}></TextInput>
+                    style={styles.inputName}
+                    value={photoName}
+                    onChangeText={(value) => setPhotoName(value)}
+                    ></TextInput>
             </View>
             <View style={styles.form}>
                 <EvilIcons name="location" size={32} color="gray" style={styles.icon} />
                 <TextInput
                     placeholder="Location..."
-                    style={styles.inputLocation}>
+                    style={styles.inputLocation}
+                    value={locationName}
+                    onChangeText={(value) => setLocationName(value)}>
                 </TextInput>
 
             </View>

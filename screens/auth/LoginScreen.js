@@ -72,7 +72,7 @@ export default function LoginScreen({ navigation }) {
                                     </TextInput>
                                 </View>
                                 <TouchableOpacity
-                                    onPress={handelSubmit}
+                                    onPress={() => navigation.navigate('Home')}
                                     activeOpacity={0.8}
                                     style={styles.btnSignUp}>
                                     <Text style={styles.btnTextSignUp}>Login</Text>

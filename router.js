@@ -6,8 +6,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-import { TouchableOpacity } from 'react-native'
-
 import LoginScreen from "./screens/auth/LoginScreen";
 import RegisterScreen from "./screens/auth/RegistrationScreen";
 import PostsScreen from "./screens/mainScreen/PostsScreen";
@@ -15,8 +13,7 @@ import CreateScreen from "./screens/mainScreen/CreatePostsSreen";
 import ProfileScreen from "./screens/mainScreen/ProfileScreen";
 
 // icons import
-import { AntDesign, Octicons, Ionicons, MaterialIcons } from 'react-native-vector-icons';
-import { StyleSheet } from "react-native";
+import { AntDesign } from 'react-native-vector-icons';
 
 export const useRoute = (isAuth) => {
     if (!isAuth) {
@@ -35,69 +32,46 @@ export const useRoute = (isAuth) => {
         )
     }
     return (
-        <Tab.Navigator tabBarOptions={{ showLabel: false }}>
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, size, color }) => {
+                    let iconName;
+                    if (route.name === "Posts") {
+                        iconName = focused ? "appstore1" : "appstore-o"
+                    }
+                    else if (route.name === "Create") {
+                        iconName = focused ? "pluscircle" : 'pluscircleo'
+                    } else if (route.name === "Profile") {
+                        iconName = focused ? "smile-circle" : "smileo"
+                    }
+                    return <AntDesign name={iconName} size={24} color={color} />
+                },
+                "tabBarActiveTintColor": "tomato",
+                "tabBarInactiveTintColor": "gray",
+                "tabBarStyle": [
+                    {
+                        "display": "flex"
+                    },
+                    null
+                ]
+            })}
+            >
             <Tab.Screen
                 options={{
-                    tabBarIcon: ({ focused, size, color }) => (
-                        <TouchableOpacity>
-                            <AntDesign name="appstore-o" size={24} color={color} />
-                        </TouchableOpacity>
-                    ),
-                    headerRight: () => (
-                        <TouchableOpacity>
-                            <MaterialIcons name="logout" size={30} color="black" 
-                             onPress={() => alert('This is a button!')} />
-                        </TouchableOpacity>
-                    )
+                    tabBarShowLabel: false
                 }}
-                name="Posts" component={PostsScreen}
-            />
+                name="Posts" component={PostsScreen} />
             <Tab.Screen
                 options={{
-                    tabBarIcon: ({ focused, size, color }) => (
-                        <TouchableOpacity>
-                            <AntDesign name="pluscircle" style={styles.iconAdd}
-                             onPress={() => navigation.navigate('Create')} />
-                        </TouchableOpacity>
-                    ),
-                    headerLeft: () => (
-                        <TouchableOpacity
-                           >
-                            <Ionicons name="ios-arrow-back" size={24} style={styles.iconBack}
-                             onPress={() => navigation.navigate('Posts')} />
-                        </TouchableOpacity>
-                    )
+                    tabBarShowLabel: false
                 }}
                 name="Create" component={CreateScreen} />
             <Tab.Screen
                 options={{
-                    tabBarIcon: ({ focused, size, color}) => (
-                        <TouchableOpacity>
-                            <Octicons name="person" size={24} color="black" 
-                           />
-                        </TouchableOpacity>
-                    ),
-                    headerLeft: () => (
-                        <TouchableOpacity>
-                            <Ionicons name="ios-arrow-back" size={24} style={styles.iconBack}
-                             onPress={() => navigation.navigate('Posts')} />
-                        </TouchableOpacity>
-                    )
+                    tabBarShowLabel: false
                 }}
                 name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     )
 }
 
-const styles = StyleSheet.create({
-    iconAdd:{
-        color: "#FF6C00",
-        fontSize: 30,
-        
-    },
-    iconBack:{
-        color: '#212121',
-        opacity: 0.8,
-        paddingLeft: 10
-    }
-})
