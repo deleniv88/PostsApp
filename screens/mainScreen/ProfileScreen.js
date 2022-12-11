@@ -45,12 +45,12 @@ export default function ProfileScreen({ route, navigation }) {
                                             <EvilIcons name="comment" size={24} />
                                             <Text
                                                 style={styles.counterComment}
-                                                onPress={() => navigation.navigate("Comments")}>0</Text>
+                                                onPress={() => navigation.navigate("Comments", item)}>0</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.locationPlace}>
                                             <EvilIcons name="location" size={24}></EvilIcons>
                                             <Text
-                                                onPress={() => navigation.navigate("Map")}
+                                                onPress={() => navigation.navigate("MapScreen", item)}
                                                 style={styles.location}>{item.locationName}</Text>
                                         </TouchableOpacity>
                                     </View>

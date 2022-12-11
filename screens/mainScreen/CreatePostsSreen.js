@@ -49,7 +49,7 @@ export default function CreatePostsScreen({ navigation }) {
         (async () => {
             const { status } = await Camera.requestCameraPermissionsAsync();
             setHasPermission(status === 'granted');
-            const { location } = await Location.requestPermissionsAsync();
+            const { location } = await Location.requestForegroundPermissionsAsync();
             if (location !== 'granted') {
                 setErrorMsg("No location")
             }
