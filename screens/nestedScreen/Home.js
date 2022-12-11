@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ScrollView } from "react-native";
 import { EvilIcons } from '@expo/vector-icons';
 
 
@@ -13,6 +13,8 @@ export default function Home({ route, navigation }) {
         if (route.params) {
             setPosts((prevState) => [...prevState, route.params])
         }
+        console.log(route.params);
+        console.log(posts);
     }, [route.params]);
 
     return (
@@ -24,7 +26,8 @@ export default function Home({ route, navigation }) {
                     <Text style={styles.userEmail}>Email</Text>
                 </View>
             </View>
-            <View style={styles.postContainer}>
+                <View style={styles.postContainer}>
+            
                 <FlatList data={posts} keyExtractor={(item, indx) => indx.toString()}
                     renderItem={({ item }) => (
                         <View style={styles.posts}>
@@ -38,12 +41,12 @@ export default function Home({ route, navigation }) {
                                 <EvilIcons name="comment" size={24} color="black" />
                                     <Text
                                         style={styles.counterComment}
-                                        onPress={() => navigation.navigate("Comments")}>0</Text>
+                                        onPress={() => navigation.navigate("Comments", item)}>0</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.locationPlace}>
                                     <EvilIcons name="location" size={24}></EvilIcons>
                                     <Text
-                                        onPress={() => navigation.navigate("Map")}
+                                        onPress={() => navigation.navigate('MapScreen', item)}
                                         style={styles.location}>
                                             {item.locationName}
                                         </Text>
@@ -52,6 +55,7 @@ export default function Home({ route, navigation }) {
                         </View>
                     )} />
             </View>
+
         </View>
     )
 }

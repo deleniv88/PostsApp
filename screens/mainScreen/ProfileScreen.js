@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity, Image, ImageBackground, FlatList } from "react-native"
+import { View, Text, StyleSheet, Dimensions, TextInput, TouchableOpacity, Image, ImageBackground, FlatList, ScrollView } from "react-native"
 import { Camera } from "expo-camera"
 import { useState } from "react";
 import imageBack from '../../assets/images/background.jpeg';
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10
     },
     userName:{
-        marginTop: 140,
+        marginTop: 120,
         fontSize: 30,
         fontWeight: 'bold'
     },

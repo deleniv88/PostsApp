@@ -19,28 +19,30 @@ export default function CreatePostsScreen({ navigation }) {
     const [photoName, setPhotoName] = useState('');
     const [locationName, setLocationName] = useState(null)
 
-    const [postName, setPostName] = useState('');
-
-    // const [location, setLocation] = useState(null)
-
     const takePhoto = async () => {
         const photo = await camera.takePictureAsync();
-
         setPhoto(photo.uri);
-        const location = await Location.getCurrentPositionAsync()
-        console.log(location);
+
+        
         console.log(photo);
         console.log(photo.uri);
         console.log({ photo });
     }
 
-    const sendPhoto = () => {
+    const sendPhoto = async () => {
+        const location = await Location.getCurrentPositionAsync()
+        const longitude = location.coords.longitude
+        const latitude = location.coords.latitude
+       
         console.log(navigation);
-        navigation.navigate("Profile", { photo, photoName, locationName })
-        navigation.navigate("Home", { photo, photoName, locationName })   
-        setPhotoName('');
-        setLocationName('')
-        console.log(photoName);
+        navigation.navigate("MapScreen", { photo, photoName, locationName, longitude, latitude })
+        navigation.navigate("Profile", { photo, photoName, locationName, longitude, latitude })
+        navigation.navigate("Home", { photo, photoName, locationName, longitude, latitude})
+        setPhotoName(null);
+        setLocationName(null)
+        
+        console.log(longitude);
+        console.log(latitude);
     }
 
     useEffect(() => {
@@ -51,6 +53,7 @@ export default function CreatePostsScreen({ navigation }) {
             if (location !== 'granted') {
                 setErrorMsg("No location")
             }
+            console.log(location.coords);
         })();
     }, [])
 
@@ -63,7 +66,6 @@ export default function CreatePostsScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            {/* <View style={styles.cameraContainer}> */}
             <Camera style={styles.camera} ref={setCamera} type={type}>
                 {photo && (<View style={styles.takePhotoContainer}>
                     <Image source={{ uri: photo }}></Image>
@@ -72,13 +74,20 @@ export default function CreatePostsScreen({ navigation }) {
                     <FontAwesome5 name="camera" size={24} color="gray" onPress={takePhoto} />
                 </View>
             </Camera>
-            {/* </View> */}
             <View style={styles.photoSettings}>
+                {photo ? 
+                 <TouchableOpacity onPress={takePhoto}>
+                 <Text style={styles.textPhoto}>
+                     Edit photo
+                 </Text>
+             </TouchableOpacity>
+                :
                 <TouchableOpacity onPress={takePhoto}>
-                    <Text style={styles.textPhoto}>
-                        Download photo
-                    </Text>
-                </TouchableOpacity>
+                <Text style={styles.textPhoto}>
+                    Download photo
+                </Text>
+            </TouchableOpacity>}
+               
                 <TouchableOpacity
                     onPress={() => {
                         setType(
@@ -96,7 +105,7 @@ export default function CreatePostsScreen({ navigation }) {
                     style={styles.inputName}
                     value={photoName}
                     onChangeText={(value) => setPhotoName(value)}
-                    ></TextInput>
+                ></TextInput>
             </View>
             <View style={styles.form}>
                 <EvilIcons name="location" size={32} color="gray" style={styles.icon} />
@@ -106,24 +115,29 @@ export default function CreatePostsScreen({ navigation }) {
                     value={locationName}
                     onChangeText={(value) => setLocationName(value)}>
                 </TextInput>
-
             </View>
-            <TouchableOpacity
-                onPress={sendPhoto}
-                activeOpacity={0.8}
-                style={styles.btnSignUp}>
-                <Text style={styles.btnTextSignUp}>Create post</Text>
-            </TouchableOpacity>
+            {photo && photoName && locationName ?
+                <TouchableOpacity
+                    onPress={sendPhoto}
+                    activeOpacity={0.8}
+                    style={styles.createPostContainer}>
+                    <Text style={styles.textWithPhoto}>Create post</Text>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity
+                    style={styles.createPostContainerWithOutPhoto}>
+                    <Text style={styles.textWithOutPhoto}>Create post</Text>
+                </TouchableOpacity>}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 'flex-start',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#E5E5E5;'
+        backgroundColor: '#E5E5E5'
     },
     text: {
         color: 'white'
@@ -139,7 +153,7 @@ const styles = StyleSheet.create({
     camera: {
         width: cameraWidth,
         height: 300,
-        marginTop: 20,
+        marginTop: -90,
         borderRadius: 10,
         alignItems: "center",
         justifyContent: "center",
@@ -175,25 +189,34 @@ const styles = StyleSheet.create({
         left: 0,
         top: 10
     },
-    btnSignUp: {
-        width: cameraWidth,
+    createPostContainer: {
+        width: widthFormInput,
         height: 50,
-        backgroundColor: "#F6F6F6",
-        color: "white",
+        backgroundColor: "tomato",
         marginTop: 30,
         borderRadius: 25,
-        fontSize: 16,
-        alignItems: "center",
-        justifyContent: "center",
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    btnTextSignUp: {
-        color: "#BDBDBD",
-        fontSize: 16
+    textWithPhoto: {
+        fontSize: 16,
+        color: 'white'
+    },
+    createPostContainerWithOutPhoto: {
+        width: widthFormInput,
+        height: 50,
+        backgroundColor: "#F6F6F6",
+        marginTop: 30,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textWithOutPhoto: {
+        fontSize: 16,
+        color: '#BDBDBD'
     },
     takePhotoContainer: {
         position: 'absolute',
-        // top: 20,
-        // left: 20,
         borderColor: 'white',
         borderWidth: 1,
         height: cameraHeigth,

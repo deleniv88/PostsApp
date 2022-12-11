@@ -4,18 +4,37 @@ import Home from "../nestedScreen/Home";
 import CommentsScreen from "../nestedScreen/CommentsScreen";
 import MapScreen from "../nestedScreen/MapScreen";
 
-const NestedScreen = createStackNavigator();
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
-const PostsScreen = () => {
+
+
+const NestedScreen = createStackNavigator();
+const tabHiddenRoutes = ["Comments","MapScreen"];
+
+
+const PostsScreen = ({navigation, route}) => {
+
+  if(tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))){
+    navigation.setOptions({tabBarStyle: {display: 'none'}});
+   } else {
+   navigation.setOptions({tabBarStyle: {display: 'flex'}});
+  }
+
   return (
-    <NestedScreen.Navigator>
+    <NestedScreen.Navigator >
       <NestedScreen.Screen
         name="Home"
         component={Home}
-        options={{ headerShown: false }}
+        options={{ headerShown: false,
+         }}
       />
-      <NestedScreen.Screen  name="Comments" component={CommentsScreen} />
-      <NestedScreen.Screen name="Map" component={MapScreen} />
+      <NestedScreen.Screen name="Comments" component={CommentsScreen} 
+      // options={{ headerShown: false}}
+      // options={{
+      //   headerShown: false,
+      // }}
+      />
+      <NestedScreen.Screen name="MapScreen" component={MapScreen} />
     </NestedScreen.Navigator>
   );
 };
