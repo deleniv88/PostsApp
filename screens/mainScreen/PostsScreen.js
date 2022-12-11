@@ -9,6 +9,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 
 const NestedScreen = createStackNavigator();
+
 const tabHiddenRoutes = ["Comments","MapScreen"];
 
 

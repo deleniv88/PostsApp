@@ -18,6 +18,7 @@ import ProfileScreen from "./screens/mainScreen/ProfileScreen";
 import { AntDesign, Octicons, Ionicons, MaterialIcons } from 'react-native-vector-icons';
 import { StyleSheet } from "react-native";
 
+
 export const useRoute = (isAuth) => {
     if (!isAuth) {
         return (
@@ -73,7 +74,14 @@ export const useRoute = (isAuth) => {
                 name="Posts" component={PostsScreen} />
             <Tab.Screen
                 options={{
-                    tabBarShowLabel: false
+                    tabBarShowLabel: false,
+                        headerLeft: () => (
+                        <TouchableOpacity
+                           >
+                            <Ionicons name="ios-arrow-back" size={24} style={styles.iconBack}
+                             onPress={() => alert('This is a button!')} />
+                        </TouchableOpacity>
+                    )
                 }}
                 name="Create" component={CreateScreen} />
             <Tab.Screen
