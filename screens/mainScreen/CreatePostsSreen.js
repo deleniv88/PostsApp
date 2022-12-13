@@ -35,8 +35,6 @@ export default function CreatePostsScreen({ navigation }) {
         const latitude = location.coords.latitude
        
         console.log(navigation);
-        navigation.navigate("MapScreen", { photo, photoName, locationName, longitude, latitude })
-        navigation.navigate("Profile", { photo, photoName, locationName, longitude, latitude })
         navigation.navigate("Home", { photo, photoName, locationName, longitude, latitude})
         setPhotoName(null);
         setLocationName(null)

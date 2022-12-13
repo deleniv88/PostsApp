@@ -1,6 +1,9 @@
-import { useEffect, useState, useDispatch } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, ImageBackground, TextInput, Button, TouchableOpacity, Platform, KeyboardAvoidingView, Keyboard, Dimensions } from 'react-native';
 import imageBack from '../../assets/images/background.jpeg';
+
+import { useDispatch } from 'react-redux';
+import {authSignInUser} from '../../redux/auth/authOperations'
 
 const widthFormInput = '90%';
 
@@ -15,15 +18,15 @@ export default function LoginScreen({ navigation }) {
 
     const [isShowKeyboadr, setIsShowKeyboard] = useState(false);
     const [state, setState] = useState(initialState);
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     const [dimensions, setDimensions] = useState(Dimensions.get('window').width)
 
     const handelSubmit = () => {
         setIsShowKeyboard(false);
         Keyboard.dismiss();
-        // dispatch(authSignInUser(state))
-        setState(initialState);
+        dispatch(authSignInUser(state))
+        // navigation.navigate('Home')
         console.log(state);
     }
 
@@ -72,7 +75,7 @@ export default function LoginScreen({ navigation }) {
                                     </TextInput>
                                 </View>
                                 <TouchableOpacity
-                                    onPress={() => navigation.navigate('Home')}
+                                    onPress={handelSubmit}
                                     activeOpacity={0.8}
                                     style={styles.btnSignUp}>
                                     <Text style={styles.btnTextSignUp}>Login</Text>

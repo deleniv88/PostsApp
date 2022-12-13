@@ -1,8 +1,11 @@
-import { useEffect, useState, useDispatch } from 'react';
+import { useEffect, useState} from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, ImageBackground, 
     TextInput, Button, TouchableOpacity, Platform, KeyboardAvoidingView, Keyboard, 
     Dimensions } from 'react-native';
 import imageBack from '../../assets/images/background.jpeg';
+
+import {authSignUpUser} from '../../redux/auth/authOperations';
+import { useDispatch } from 'react-redux';
 
 const widthFormInput = '90%';
 
@@ -18,7 +21,7 @@ export default function RegistrationScreen({ navigation }){
 
     const [isShowKeyboadr, setIsShowKeyboard] = useState(false);
     const [state, setState] = useState(initialState);
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     const [dimensions, setDimensions] = useState(Dimensions.get('window').width)
 
@@ -36,16 +39,16 @@ export default function RegistrationScreen({ navigation }){
     const handelSubmit = () => {
         setIsShowKeyboard(false);
         Keyboard.dismiss();
-        // dispatch(authSignUpUser(state))
+        dispatch(authSignUpUser(state))
         setState(initialState);
-        navigation.navigate('Home')
+    
         console.log(state);
     }
 
     return (
 
         <ImageBackground source={image} style={styles.image}>
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <TouchableWithoutFeedback onPress={handelSubmit}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS == "ios" ? "padding" : "height"}>
                     <View style={styles.constainer}>
